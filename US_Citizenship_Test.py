@@ -19,6 +19,9 @@ os.system('color')
 os.system('mode con: cols=100 lines=20')
 
 def test(foler_file_name):
+	print('--------------------------------------')
+	print(file)
+	print('--------------------------------------')
 	time_start = time.time()
 	with open(foler_file_name, "r", encoding='utf-8') as f: 
 		data = f.readlines()
