@@ -46,6 +46,8 @@ def test(foler_file_name):
 	not_finished = 1
 	k = 0
 	score = 0
+	wrong = 0
+	answer_once = 0
 
 	while not_finished:
 		print('<', k+1 , '/', len(de) , '>')
@@ -70,9 +72,13 @@ def test(foler_file_name):
 			print(colored('Correct!', 'green'))
 			score = score + 1
 			k = k + 1
+			answer_once = 0
 		else:
 			print(colored('Wrong. Try again.', 'red'))
 			score = score - 1
+			if answer_once == 0:
+				wrong = wrong + 1
+				answer_once = 1
 			if not os.path.exists('./fault_record'):
 				os.makedirs('./fault_record')
 			with open('./fault_record/fault_' + file + ".txt", "a", encoding='utf-8') as f:
@@ -82,10 +88,15 @@ def test(foler_file_name):
 		print('--------------------------------------')
 		if k == len(de):
 			not_finished = 0
-			if score == len(de):
-				print(colored('Your score: '+ str(score)+ '/'+ str(len(de)) + '   GREAT!!!', 'green'))
+			score_100 = round(((len(de)-wrong)/len(de))*100,0)
+			if score_100 >= 80:
+				# print(colored('Your score: '+ str(score)+ '/'+ str(len(de)) + '   GREAT!!!', 'green'))
+				print(colored('Your score: '+ str(score_100) + '   YOU PASS!!!', 'green'))
+				print(colored('Number of questions failed: -'+ str(wrong)+'/'+ str(len(de)), 'green'))
 			else:
-				print(colored('Your score: '+ str(score)+ '/'+ str(len(de)), 'red'))
+				# print(colored('Your score: '+ str(score)+ '/'+ str(len(de)), 'red'))
+				print(colored('Your score: '+ str(score_100) + '   NOT PASS...', 'red'))
+				print(colored('Number of questions failed: -'+ str(wrong)+'/'+ str(len(de)), 'red'))
 			print(colored("test finished", 'cyan'))
 			time_end = time.time()
 			print('time cost: ', round(time_end-time_start, 3), 's')
@@ -94,7 +105,8 @@ def test(foler_file_name):
 			with open('./score_record/score_' + file + ".txt", "a", encoding='utf-8') as f:
 				now = datetime.now()
 				dt_string = now.strftime("%Y/%m/%d %H:%M:%S")
-				score_message = file+'   '+dt_string+'   '+str(score)+'/'+str(len(de))+'   '+str(round(time_end-time_start, 3))+'\n'
+				# score_message = file+'   '+dt_string+'   '+str(score)+'/'+str(len(de))+'   '+str(round(time_end-time_start, 3))+'\n'
+				score_message = file+'   '+dt_string+'   '+str(score_100)+'   -'+str(wrong)+'/'+ str(len(de))+'   '+str(round(time_end-time_start, 3))+'\n'
 				f.write(score_message)
 
 
