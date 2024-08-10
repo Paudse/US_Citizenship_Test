@@ -1,6 +1,10 @@
 
 folder = "./US_Citizenship_Test_Sheet/"
-file = "English-100-civics-test-questions-all"
+# file = "English-100-civics-test-questions-1-25"
+# file = "English-100-civics-test-questions-26-50"
+# file = "English-100-civics-test-questions-51-75"
+# file = "English-100-civics-test-questions-76-100"
+file = "English-100-civics-test-questions-1-100"
 
 ###
 foler_file_name = folder + file + ".txt"
